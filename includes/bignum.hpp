@@ -4,7 +4,9 @@
 #include <iostream>
 #include <cstdint>
 #include <string>
-#include <vector>
+#include <list>
+
+#include "../includes/number.hpp"
 
 /*
 This class handle bignum. Numbers are stored in base2 and operations are made with bitwise operators.
@@ -12,19 +14,26 @@ This class handle bignum. Numbers are stored in base2 and operations are made wi
 Numbers are stored in a list of 64 bits, they are unsigned and in base2 as well
 */
 
+struct Number {
+    int bit_size;
+    std::list<uint64_t> table {};
+};
+
 
 class Bn {
     public:
-        Bn();                               //constructor
+        Bn();                               //constructor: set the value to 0
+        Bn(std::list<uint64_t> table);      //give the number directly into 64 bits size block
+        Bn(std::string &number);            //convert the number into 64 bits size block 
         
         void Bn_init();                     //set the value to zero
-        void Bn_set(std::string& number);   //set the value to the given number
+        void Bn_set(std::string &number);   //set the value to the given number
         void Bn_print(int base);            //print the number in the given base
         void Bn_free();                     //reset the number to 0
         void Bn_clear();                    //destroy definetely the number
 
     private:
-        std::vector<uint64_t> table_numbers {};
+        struct Number number_table;
 };  
 
 
